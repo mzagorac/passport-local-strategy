@@ -1,0 +1,38 @@
+.Header {
+  background-color: white;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border: 1px solid #f0f0f0;
+}
+
+.logo {
+  font-family: cursive;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+nav {
+  width: 400px;
+  display: flex;
+  justify-content: space-evenly;
+  color: gray;
+}
+
+nav > * {
+  text-decoration: none;
+  color: grey;
+  padding: 12px 30px;
+  transition: 500ms;
+}
+
+nav > div {
+  cursor: pointer;
+}
+
+nav > *:hover {
+  background-color: gray;
+  color: #fff;
+}
