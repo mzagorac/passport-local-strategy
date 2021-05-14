@@ -1,7 +1,7 @@
 import { NavLink, useHistory } from "react-router-dom";
 import "./Header.css";
 
-export default function Header({ user, setUser }) {
+export default function Header({ user, setUser, bc }) {
   const { push } = useHistory();
 
   const handleLogout = async (e) => {
@@ -10,6 +10,7 @@ export default function Header({ user, setUser }) {
 
     if (responseData.message === "user logged out") setUser(null);
     push("/");
+    bc.postMessage("Logged out");
   };
 
   return (

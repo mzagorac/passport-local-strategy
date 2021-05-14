@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
 
-export default function Login({ setUser }) {
+export default function Login({ setUser, bc }) {
   const [data, setData] = useState({ username: "jack", password: "1234567" });
   const { push } = useHistory();
 
@@ -16,17 +16,15 @@ export default function Login({ setUser }) {
 
     const responseData = await respose.json();
 
-    console.log(responseData);
     if (responseData.message === "user logged in") {
       const userResponse = await fetch("/profile");
       const userData = await userResponse.json();
 
       setUser(userData.user);
       push("/profile");
-      // console.log(userData);
-    }
 
-    // setData({ username: "", password: "" });
+      bc.postMessage("Logged in");
+    }
   };
 
   const changeHandler = (e) => {

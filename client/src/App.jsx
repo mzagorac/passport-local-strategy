@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Header from "./components/Header";
@@ -13,43 +8,49 @@ import "./App.css";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [bc, setBc] = useState(null);
+  const { push } = useHistory();
 
   useEffect(() => {
-    fetch("/profile")
-      .then((response) => {
-        if (response.redirected) {
-          return Promise.resolve({});
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.user) {
-          setUser(data.user);
-        }
-      })
-      .catch(console.error);
-  }, []);
+    const bc = new BroadcastChannel("test_channel");
+    setBc(bc);
+    bc.onmessage = function (ev) {
+      if (ev.data === "Logged in") {
+        fetch("/profile")
+          .then((res) => res.json())
+          .then((data) => {
+            setUser(data.user);
+            push("/profile");
+          })
+          .catch(console.error);
+      }
+
+      if (ev.data === "Logged out") {
+        setUser(null);
+      }
+    };
+
+    return () => bc.close();
+  }, [push]);
 
   return (
     <div className="App">
-      <Router>
-        <Header user={user} setUser={setUser} />
-        <Switch>
-          <Route exact path="/">
-            <Home />
+      <Header user={user} setUser={setUser} bc={bc} />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/login">
+          <Login setUser={setUser} bc={bc} />
+        </Route>
+        {user ? (
+          <Route path="/profile">
+            <Profile user={user} />
           </Route>
-          <Route path="/login">
-            <Login setUser={setUser} />
-          </Route>
-          {user ? (
-            <Route path="/profile">
-              <Profile user={user} />
-            </Route>
-          ) : (
-            <Redirect to="/" />
-          )}
-        </Switch>
-      </Router>
+        ) : (
+          <Redirect to="/" />
+        )}
+      </Switch>
     </div>
   );
 }
