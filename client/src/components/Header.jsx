@@ -12,8 +12,6 @@ export default function Header({ user, setUser }) {
     push("/");
   };
 
-  console.log(user);
-
   return (
     <div className="Header">
       <div className="logo" onClick={() => push("/")}>

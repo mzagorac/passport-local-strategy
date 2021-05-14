@@ -1,7 +1,6 @@
 import "./Profile.css";
 
 export default function Profile({ user }) {
-  console.log(user);
   return (
     <div className="Profile">
       <h1>My profile</h1>

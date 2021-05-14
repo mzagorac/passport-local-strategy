@@ -23,7 +23,6 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         if (data.user) {
           setUser(data.user);
         }
