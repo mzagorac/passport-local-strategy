@@ -15,7 +15,7 @@ const users = [
   },
 ];
 
-exports.fndById = function (id, cb) {
+exports.findById = function (id, cb) {
   process.nextTick(function () {
     const user = users.find((usr) => usr.id === id);
     if (user) return cb(null, user);
