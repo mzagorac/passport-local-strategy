@@ -1,14 +1,18 @@
 import { NavLink, useHistory } from "react-router-dom";
 import "./Header.css";
 
-export default function Header() {
+export default function Header({ user, setUser }) {
   const { push } = useHistory();
 
   const handleLogout = async (e) => {
     const response = await fetch("/logout");
     const responseData = await response.json();
-    console.log(responseData);
+
+    if (responseData.message === "user logged out") setUser(null);
+    push("/");
   };
+
+  console.log(user);
 
   return (
     <div className="Header">
@@ -17,8 +21,12 @@ export default function Header() {
       </div>
       <nav>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <div onClick={handleLogout}>Logout</div>
+        {user && <NavLink to="/profile">Profile</NavLink>}
+        {!user ? (
+          <NavLink to="/login">Login</NavLink>
+        ) : (
+          <div onClick={handleLogout}>Logout</div>
+        )}
       </nav>
     </div>
   );

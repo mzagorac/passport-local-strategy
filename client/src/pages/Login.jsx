@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./Login.css";
 
-export default function Login() {
-  const [data, setData] = useState({ username: "", password: "" });
+export default function Login({ setUser }) {
+  const [data, setData] = useState({ username: "jack", password: "1234567" });
+  const { push } = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -14,7 +16,17 @@ export default function Login() {
 
     const responseData = await respose.json();
 
-    setData({ username: "", password: "" });
+    console.log(responseData);
+    if (responseData.message === "user logged in") {
+      const userResponse = await fetch("/profile");
+      const userData = await userResponse.json();
+
+      setUser(userData.user);
+      push("/profile");
+      // console.log(userData);
+    }
+
+    // setData({ username: "", password: "" });
   };
 
   const changeHandler = (e) => {

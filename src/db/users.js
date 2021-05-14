@@ -3,12 +3,14 @@ const users = [
     id: 1,
     username: "jack",
     password: "1234567",
-    emails: [{ value: "jack@test.com" }],
+    fullName: "Jack Dean",
+    emails: [{ value: "jack@test.com" }, { value: "jack333@test.com" }],
   },
   {
     id: 2,
     username: "bonny",
     password: "1234567",
+    fullName: "Bonny Murphy",
     emails: [{ value: "bonny@test.com" }],
   },
 ];

@@ -1,0 +1,29 @@
+.Profile {
+  width: 400px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 20px;
+  background-color: #bdfdff;
+}
+
+.Profile > h1 {
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.Profile p:first-child {
+  margin-bottom: 20px;
+}
+
+.Profile p:nth-child(2) {
+  margin-bottom: 5px;
+}
+
+.Profile ul {
+  list-style: none;
+}
+
+.Profile li {
+  text-decoration: underline;
+  text-indent: 10px;
+}
